@@ -52,14 +52,6 @@ void gui::SetupMenu(_In_ HDC hdc) noexcept
 	ImGui_ImplOpenGL3_Init();
 
 	initialized = true;
-
-	MessageBeep(MB_ICONERROR);
-	MessageBox(
-		0,
-		"just initialized",
-		"error broder",
-		MB_OK | MB_ICONEXCLAMATION
-	);
 }
 void gui::Destroy(){
 	ImGui_ImplOpenGL3_Shutdown();
@@ -101,13 +93,6 @@ LRESULT __stdcall WindowProcess(
 	if (GetAsyncKeyState(VK_END) & 1)
 	{
 		gui::open = !gui::open;
-		MessageBeep(MB_ICONERROR);
-		MessageBox(
-			0,
-			"opened",
-			"error broder",
-			MB_OK | MB_ICONEXCLAMATION
-		);
 	}
 	//pass messages to Imgui
 
