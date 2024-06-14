@@ -29,87 +29,12 @@ BOOL __stdcall detourSwapBuffers(_In_ HDC hdc)
 	return gui::oSwapBuffers(hdc);
 }
 
-bool gui::SetupWindowClass(const char* windowClassName) noexcept {
-	
-	//populate window class
-
-	windowClass.cbSize = sizeof(WNDCLASSEX);
-	windowClass.style = CS_HREDRAW | CS_VREDRAW;
-	windowClass.lpfnWndProc = DefWindowProc;
-	windowClass.cbClsExtra = 0;
-	windowClass.cbWndExtra = 0;
-	windowClass.hInstance = GetModuleHandle(NULL);
-	windowClass.hIcon = NULL;
-	windowClass.hCursor = NULL;
-	windowClass.hbrBackground = NULL;
-	windowClass.lpszMenuName = NULL;
-	windowClass.lpszClassName = windowClassName;
-	windowClass.hIconSm = NULL;
-
-
-	//register
-
-	if (!RegisterClassEx(&windowClass))
-	{
-		return false;
-	}
-	return true;
-
-}
-
-void gui::DestroyWindowClass() noexcept{
-	UnregisterClass(
-		windowClass.lpszClassName,
-		windowClass.hInstance
-	);
-}
-
-bool gui::SetupWindow(const char* windowName) noexcept{
-	// create temp window
-	window = CreateWindow(
-		windowClass.lpszClassName,
-		windowName,
-		WS_OVERLAPPEDWINDOW,
-		0,
-		0,
-		200,
-		200,
-		0,
-		0,
-		windowClass.hInstance,
-		0
-	);
-
-	if (!window)
-	{
-		return false;
-	}
-	return true;
-}
-
-void gui::DestroyWindow() noexcept{
-	if (window) {
-		DestroyWindow(window);
-	}
-}
-//
 void gui::Setup(){
-	if (!SetupWindowClass("firstTryInternalWindowClass"))
-	{
-		throw std::runtime_error("failed to create window class");
-	}
-
-	if (!SetupWindow("firstTryInternalWindow"))
-	{
-		throw std::runtime_error("failed to create window");
-	}
 
 	if (!SetupHook()) {
 		throw std::runtime_error("failed to hook swapbuffers");
 	}
 
-	DestroyWindow();
-	DestroyWindowClass();
 }
 
 void gui::SetupMenu(_In_ HDC hdc) noexcept

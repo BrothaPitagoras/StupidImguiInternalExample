@@ -14,12 +14,6 @@ namespace gui
 
 	inline twglSwapBuffers oSwapBuffers = NULL;
 
-	bool SetupWindowClass(const char* windowClassName) noexcept;
-	void DestroyWindowClass() noexcept;
-
-	bool SetupWindow(const char* windowName) noexcept;
-	void DestroyWindow() noexcept;
-
 	bool SetupHook() noexcept;
 
 	void DestroyHook() noexcept;
