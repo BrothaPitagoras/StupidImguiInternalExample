@@ -3,6 +3,7 @@
 #include "gui.hpp"
 
 void Setup(const HMODULE instance) {
+    bool exception = false;
     try
     {
         gui::Setup();
@@ -16,18 +17,15 @@ void Setup(const HMODULE instance) {
             "error broder",
             MB_OK | MB_ICONEXCLAMATION
         );
-
-        goto UNLOAD;
+        exception = true;
     }
 
-    while (!GetAsyncKeyState(VK_HOME))
+    while (!GetAsyncKeyState(VK_HOME) && !exception)
     {
         std::this_thread::sleep_for(std::chrono::milliseconds(200));
     }
-
-UNLOAD:
+    
     gui::Destroy();
-
     FreeLibraryAndExitThread(instance, 0);
 
 }
