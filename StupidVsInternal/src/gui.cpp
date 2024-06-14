@@ -17,8 +17,6 @@ LRESULT CALLBACK WindowProcess(
 BOOL __stdcall detourSwapBuffers(_In_ HDC hdc)
 {
 
-	const auto result = gui::oSwapBuffers(hdc);
-
 	if (!gui::initialized) {
 		gui::SetupMenu(hdc);
 	}
@@ -28,7 +26,7 @@ BOOL __stdcall detourSwapBuffers(_In_ HDC hdc)
 		gui::Render();
 	}
 
-	return result;
+	return gui::oSwapBuffers(hdc);
 }
 
 bool gui::SetupWindowClass(const char* windowClassName) noexcept {
